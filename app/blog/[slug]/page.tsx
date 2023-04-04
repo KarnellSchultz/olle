@@ -3,6 +3,45 @@ import Link from 'next/link';
 
 const URL = 'https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clg21v31v008c01un629t7whk/master'
 
+const PostsQuery = `
+query PostsQuery {
+  posts {
+    id
+    title
+    subtitle
+    slug
+    date
+  }
+}
+`
+
+type Post = {
+    id: string;
+    title: string;
+    subtitle: string;
+    slug: string;
+    date: string;
+}
+
+const hygraphPaths = new GraphQLClient(URL);
+const getPosts = async () => {
+    const { posts } = await hygraphPaths.request(
+        PostsQuery,
+    ) as { posts: Post[] };
+
+    return posts
+}
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+    const posts = await getPosts()
+
+
+    return posts.map((post) => ({
+        slug: post.slug,
+    }));
+}
+
+
 type BlogPost = {
     content: {
         text: string;
@@ -34,6 +73,7 @@ type Params = {
         slug: string;
     }
 }
+
 const hygraph = new GraphQLClient(URL);
 const getProduct = async (slug: Params["params"]["slug"]) => {
     const { post } = await hygraph.request(
