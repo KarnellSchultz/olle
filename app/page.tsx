@@ -43,7 +43,7 @@ export default async function Page() {
   const posts = await getPosts();
   return (
     <div>
-      <h1 className='capitalize text-3xl font-bold py-6  '>olle blog</h1>
+      <h1 className='capitalize text-3xl font-bold py-6  tracking-tighter'>olle blog</h1>
       <section className='flex py-4 items-center gap-4' >
         <Image className='rounded-3xl'
           src="/images/olle-pic.png"

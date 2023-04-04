@@ -51,7 +51,7 @@ export default async function BlogPage({ params }: Params) {
     return (
         <>
             <Link href={"/"} className='cursor-pointer' >
-                <h1 className='capitalize text-2xl font-bold pt-10'>olle blog</h1>
+                <h1 className='capitalize tracking-tighter text-2xl font-bold pt-10'>olle blog</h1>
             </Link>
             <div className='py-4'>
                 <h2 className='capitalize text-4xl font-bold pt-4 text-green-500'>
