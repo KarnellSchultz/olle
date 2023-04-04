@@ -43,27 +43,25 @@ export default async function Page() {
   const posts = await getPosts();
   return (
     <div>
-      <h1 className='capitalize text-4xl font-bold py-8 '>olle blog</h1>
-      <section className='flex py-8 items-center' >
-        <Image className='rounded-3xl mx-3'
+      <h1 className='capitalize text-4xl font-bold py-8  '>olle blog</h1>
+      <section className='flex py-8 items-center gap-4' >
+        <Image className='rounded-3xl'
           src="/images/olle-pic.png"
           width={70}
           height={70}
           alt="profile picture" />
-        <p>the personal blog of olle darmell</p>
+        <p>The personal blog of olle darmell</p>
       </section>
       <ul>
-        {
-          posts.map((post) => (
-            <li key={post.id}>
-              <Link href={`/blog/${post.slug}`}>
-                <p className='text-2xl font-bold capitalize'> {post.title}</p>
-                <p>{new Date(post.date).toDateString()}</p>
-                <p className='text-xl ' > {post.subtitle}</p>
-              </Link>
-            </li>
-          ))
-        }
+        {posts.reverse().map((post) => (
+          <li key={post.id} className='py-4'>
+            <Link href={`/blog/${post.slug}`}>
+              <p className='prose-2xl font-bold capitalize text-green-500'> {post.title}</p>
+              <p className='prose-sm' >{new Date(post.date).toDateString()}</p>
+              <p className='prose-lg ' > {post.subtitle}</p>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

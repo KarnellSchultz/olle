@@ -6,6 +6,7 @@ const URL = 'https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clg21v3
 type BlogPost = {
     content: {
         text: string;
+        html: string;
     };
     date: string;
     slug: string;
@@ -18,6 +19,7 @@ query BlogPostQuery($slug: String!) {
     post(where: {slug: $slug}) {
         content {
             text
+            html
         }
         date
         slug
@@ -45,15 +47,19 @@ const getProduct = async (slug: Params["params"]["slug"]) => {
 
 
 export default async function BlogPage({ params }: Params) {
-    const post = await getProduct(params.slug)
+    const post = await getProduct(params.slug.toLocaleLowerCase())
     return (
         <>
-            <h1 className='capitalize text-2xl font-bold py-10'>olle blog</h1>
-            <Link href="/">Home</Link>
-            <h1
-                className='text-6xl font-bold text-center text-cyan-300'
-            >{post.title}</h1>
-            <h1>{post.content.text}</h1>
+            <Link href={"/"} className='cursor-pointer' >
+                <h1 className='capitalize text-2xl font-bold pt-10'>olle blog</h1>
+            </Link>
+            <div className='py-4'>
+                <h2 className='capitalize text-4xl font-bold pt-4 text-green-500'>
+                    {post.title}</h2>
+                <p className=''>{post.date}</p>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: post.content.html }}
+                className="[&>*]:pt-2 lg:prose-xl dark:prose-invert " />
         </>
     )
 }
